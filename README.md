@@ -1,70 +1,140 @@
-# Getting Started with Create React App
+# Cyber Leet
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A leetcode cyberpunk 2077 style interactive visualization demo.
 
-## Available Scripts
+Built with React.js, Three.js.
 
-In the project directory, you can run:
+# To crawl the data from leetcode:
 
-### `npm start`
+Simply run this python script.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```python
+# modified by Muyang
+# original code is found here : https://gcyml.github.io/2019/03/03/Python%E7%88%AC%E5%8F%96Leetcode%E9%A2%98%E7%9B%AE%E5%8F%8AAC%E4%BB%A3%E7%A0%81/
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+import requests
+import json
 
-### `npm test`
+session = requests.Session()
+user_agent = r'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36'
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+def get_problem_by_slug(slug):
+    url = "https://leetcode.com/graphql"
+    params = {'operationName': "getQuestionDetail",
+              'variables': {'titleSlug': slug},
+              'query': '''query getQuestionDetail($titleSlug: String!) {
+            question(titleSlug: $titleSlug) {
+                questionId
+                questionFrontendId
+                questionTitle
+                questionTitleSlug
+                content
+                difficulty
+                stats
+                similarQuestions
+                categoryTitle
+                topicTags {
+                        name
+                        slug
+                }
+            }
+        }'''
+              }
 
-### `npm run build`
+    json_data = json.dumps(params).encode('utf8')
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    headers = {'User-Agent': user_agent, 'Connection':
+               'keep-alive', 'Content-Type': 'application/json',
+               'Referer': 'https://leetcode.com/problems/' + slug}
+    resp = session.post(url, data=json_data, headers=headers, timeout=10)
+    content = resp.json()
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    question = content['data']['question']
+    return question
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+def get_problems():
+    url = "https://leetcode.com/api/problems/all/"
+    headers = {'User-Agent': user_agent, 'Connection': 'keep-alive'}
+    resp = session.get(url, headers = headers, timeout = 10)
+    question_list = json.loads(resp.content.decode('utf-8'))
+    easy_set = list()
+    medium_set = list()
+    hard_set = list()
+    all_set = list()
+    questions = []
+    for question in question_list['stat_status_pairs']:
+        question_id = question['stat']['frontend_question_id']
+        question_slug = question['stat']['question__title_slug']
+        level = question['difficulty']['level']
+        contents = get_problem_by_slug(question_slug)
+        all_set.append({"id" : str(question_id), "name": question_slug, "difficulty": str(level), "content": contents})
+        if level == 1:
+            easy_set.append({"id" : str(question_id), "name": question_slug, "content": contents})
+        elif level == 2:
+            medium_set.append({"id" : str(question_id), "name": question_slug, "content": contents})
+        else:
+            hard_set.append({"id" : str(question_id), "name": question_slug, "content": contents})
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    with open('cybergraph/src/data/easy.json', 'w') as easyfile:
+        json.dump(easy_set, easyfile)
+    with open('cybergraph/src/data/medium.json', 'w') as mediumfile:
+        json.dump(medium_set, mediumfile)
+    with open('cybergraph/src/data/hard.json', 'w') as hardfile:
+        json.dump(hard_set, hardfile)
+    with open('cybergraph/src/data/all.json', 'w') as allfile:
+        json.dump(all_set, allfile)
+    return easy_set, medium_set, hard_set, all_set
+    return 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+def get_problem_by_slug(slug):
+    url = "https://leetcode.com/graphql"
+    params = {'operationName': "getQuestionDetail",
+              'variables': {'titleSlug': slug},
+              'query': '''query getQuestionDetail($titleSlug: String!) {
+            question(titleSlug: $titleSlug) {
+                questionId
+                questionFrontendId
+                questionTitle
+                questionTitleSlug
+                content
+                difficulty
+                stats
+                similarQuestions
+                categoryTitle
+                topicTags {
+                        name
+                        slug
+                }
+            }
+        }'''
+              }
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    json_data = json.dumps(params).encode('utf8')
 
-## Learn More
+    headers = {'User-Agent': user_agent, 'Connection':
+               'keep-alive', 'Content-Type': 'application/json',
+               'Referer': 'https://leetcode.com/problems/' + slug}
+    resp = session.post(url, data=json_data, headers=headers, timeout=10)
+    content = resp.json()
+    question = content['data']['question']
+    return question
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+get_problems()
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
 
-### Code Splitting
+# Installation:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+cd cyberleet
+npm install
+```
 
-### Analyzing the Bundle Size
+# Run:
+```bash
+cd cyberleet
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
