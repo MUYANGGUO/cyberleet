@@ -25,6 +25,26 @@
     border-radius: 2px;
 }
 
+.credits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--yellow-color);
+  opacity: 0.75;
+  outline: none;
+  background-color: var(--yellow-color);
+  color: var(--black-color);
+  cursor: pointer;
+  padding: 5px 1px;
+  font-family: Tomorrow, sans-serif;
+  font-size: .75rem;
+  position: absolute;
+  z-index: 99;
+  right:    0;
+  bottom:   0;
+  border-radius: 2px;
+}
+
 
 .loading {
     display: inline-block;
@@ -58,10 +78,9 @@
   }
 /* Gray */
 .default {
-    border-color: #e7e7e7;
-    color: black;
   }
   
   .default:hover {
-    background: #e7e7e7;
+    background: #530fff;
+    border: 2px solid #530fff;
   }  

@@ -226,7 +226,10 @@ render() {
             this.mount = mount;
           }}
         />
+      <button id = "credits" className="credits default" onClick={()=> window.open("https://www.muyangguo.xyz/", "_blank")}>@ Muyang Guo </button>
+
       </div>
+      // <button id = "footer" className="credits orange" onClick={()=> window.open("https://www.muyangguo.xyz/" , "_blank")}> @ Muyang Guo </button>
     );
   }
 }
