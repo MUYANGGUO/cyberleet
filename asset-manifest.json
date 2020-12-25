@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/cyberleet/static/css/main.43993d0d.chunk.css",
+    "main.js": "/cyberleet/static/js/main.fc4bb824.chunk.js",
+    "main.js.map": "/cyberleet/static/js/main.fc4bb824.chunk.js.map",
+    "runtime-main.js": "/cyberleet/static/js/runtime-main.931b62db.js",
+    "runtime-main.js.map": "/cyberleet/static/js/runtime-main.931b62db.js.map",
+    "static/js/2.23bf69cf.chunk.js": "/cyberleet/static/js/2.23bf69cf.chunk.js",
+    "static/js/2.23bf69cf.chunk.js.map": "/cyberleet/static/js/2.23bf69cf.chunk.js.map",
+    "index.html": "/cyberleet/index.html",
+    "static/css/main.43993d0d.chunk.css.map": "/cyberleet/static/css/main.43993d0d.chunk.css.map",
+    "static/js/2.23bf69cf.chunk.js.LICENSE.txt": "/cyberleet/static/js/2.23bf69cf.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.931b62db.js",
+    "static/js/2.23bf69cf.chunk.js",
+    "static/css/main.43993d0d.chunk.css",
+    "static/js/main.fc4bb824.chunk.js"
+  ]
+}
