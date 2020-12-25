@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css?family=Barlow|Tomorrow:400,700&display=swap");
+:root {
+    --yellow-color: #fcee09; 
+    --red-color: #ff003c;
+    --black-color: #050a0e;
+    --blue-color: #00f0ff;
+  }
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--yellow-color);
+    outline: none;
+    background-color: var(--yellow-color);
+    color: var(--black-color);
+    cursor: pointer;
+    padding: 10px 15px;
+    font-family: Tomorrow, sans-serif;
+    font-size: .75rem;
+    position: absolute;
+    z-index: 99;
+    left: 3%;
+    top: 3%;
+    border-radius: 2px;
+}
+
+
+.loading {
+    display: inline-block;
+    overflow: scroll;
+    text-align: left;
+    opacity: 0.75;
+    width: 500px;
+    height: 400px;
+    border: 2px solid var(--yellow-color);
+    outline: none;
+    background-color: var(--yellow-color);
+    color: var(--black-color);
+    cursor: pointer;
+    padding: 10px 15px;
+    font-family: Tomorrow, sans-serif;
+    font-size: .75rem;
+    position: absolute;
+    z-index: 99;
+    left: 3%;
+    top: 10%;
+    border-radius: 2px;
+    white-space: normal;
+}
+
+.orange {
+  }
+  .orange:hover {
+    background:#bd00ff;
+    color:var(--yellow-color);
+    border: 2px solid #bd00ff;
+  }
+/* Gray */
+.default {
+    border-color: #e7e7e7;
+    color: black;
+  }
+  
+  .default:hover {
+    background: #e7e7e7;
+  }  
